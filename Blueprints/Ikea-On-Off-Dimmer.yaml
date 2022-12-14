@@ -1,0 +1,107 @@
+---
+# This automation exposes all actions from IKEA TRÅDFRI Dimmer control connected through ZHA.
+# You can assign any action to each press. 
+
+# Supported presses:
+# | Button      |
+# | ----------- |
+# | on (short)  |
+# | off (short) |
+# | on (long)   |
+# | off (long)  |
+# | Release (after long press) |
+
+# Inspiration from https://github.com/niro1987 
+
+blueprint:
+  source_url: https://github.com/rhl2401/HomeAssistant/blob/master/Blueprints/Ikea-On-Off-Dimmer.yaml
+
+  name: IKEA TRÅDFRI - 2 Button Remote - All options
+
+  description: >-
+    This automation exposes all the different presses for the IKEA TRÅDFRI on/off switch.
+  domain: automation
+
+  input:
+    remote:
+      name: IKEA TRÅDFRI on/off switch
+      description: Select the remote control you want to use
+      selector:
+        device:
+          integration: zha
+          manufacturer: IKEA of Sweden
+          model: TRÅDFRI on/off switch
+    On_Press:
+      name: On Press
+      description: On button pressed
+      default: []
+      selector:
+        action: null
+    On_Long_Press:
+      name: On button long press
+      description: On button long press
+      default: []
+      selector:
+        action: null
+    Off_Press:
+      name: Off Press
+      description: Off button pressed
+      default: []
+      selector:
+        action: null
+    Off_Long_Press:
+      name: Off button long press
+      description: Off button long press
+      default: []
+      selector:
+        action: null
+    Long_Press_Release: 
+      name: Long press release
+      description: Long press release
+      default: []
+      selector:
+        action: null
+
+mode: restart
+max_exceeded: silent
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input remote
+
+action:
+  - choose:
+      # Short-Press the on button
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.event.data.command == "on" }}'
+        sequence: !input On_Press
+
+      # Long-Press the on button
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.event.data.command == "move_with_on_off" }}'
+        sequence: !input On_Long_Press
+
+      # Short-Press the off button
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.event.data.command == "off" }}'
+        sequence: !input Off_Press
+
+      # Long-Press the off button
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.event.data.command == "move" }}'
+        sequence: !input Off_Long_Press
+
+      # Release after long press (either up or down)
+      - conditions:
+          - condition: template
+            value_template: '{{ trigger.event.data.command == "stop_with_on_off" }}'
+        sequence: !input Long_Press_Release
+
+    # Any other event will cancel the repeat loops (i.e. releasing the [on|off] button)
+    default: []
