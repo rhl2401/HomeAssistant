@@ -1,5 +1,8 @@
-# HomeAssistantBlueprints
-This is a repo of all my blueprints for Home Assistant. 
+# HomeAssistant
+
+![Home Assistant banner](Assets/ha-banner.png)
+
+This is a repo of all my scripts, blueprints and other stuff for Home Assistant. 
 
 If you want to contribute, please make a pull request which I will merge and implement into the blueprint. 
 
