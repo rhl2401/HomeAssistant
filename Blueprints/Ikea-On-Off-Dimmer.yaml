@@ -30,7 +30,7 @@ blueprint:
         device:
           integration: zha
           manufacturer: IKEA of Sweden
-          model: TRÅDFRI on/off switch
+          model: TRADFRI on/off switch
     On_Press:
       name: On Press
       description: On button pressed
