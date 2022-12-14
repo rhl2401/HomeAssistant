@@ -32,32 +32,32 @@ blueprint:
           manufacturer: IKEA of Sweden
           model: TRADFRI on/off switch
     On_Press:
-      name: On Press
-      description: On button pressed
+      name: On Short Press
+      description: On button short press
       default: []
       selector:
         action: null
     On_Long_Press:
-      name: On button long press
+      name: On Long Press
       description: On button long press
       default: []
       selector:
         action: null
     Off_Press:
-      name: Off Press
-      description: Off button pressed
+      name: Off Short Press
+      description: Off button short press
       default: []
       selector:
         action: null
     Off_Long_Press:
-      name: Off button long press
+      name: Off Long Press
       description: Off button long press
       default: []
       selector:
         action: null
     Long_Press_Release: 
       name: Long press release
-      description: Long press release
+      description: Long press release (either up or down)
       default: []
       selector:
         action: null
